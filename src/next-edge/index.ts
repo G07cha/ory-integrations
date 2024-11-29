@@ -1,8 +1,6 @@
 import { Buffer } from "buffer"
 import { SerializeOptions as CookieSerializeOptions, serialize } from "cookie"
 import { IncomingHttpHeaders } from "http"
-// @ts-ignore
-import { isText } from "istextorbinary/edition-es2022"
 import { NextApiRequest, NextApiResponse } from "next"
 import parse, { splitCookiesString } from "set-cookie-parser"
 import { CreateApiHandlerOptions } from "../type/create-api-handler-options"
@@ -10,6 +8,7 @@ import { getBaseUrl } from "../common/get-base-url"
 import { defaultForwardedHeaders } from "../common/default-forwarded-headers"
 import { processLocationHeader } from "../common/process-location-header"
 import { guessCookieDomain } from "../common/get-cookie-domain"
+import { isText } from "../common/is-text"
 
 export function filterRequestHeaders(
   headers: IncomingHttpHeaders,
@@ -154,7 +153,7 @@ export function createApiHandler(options: CreateApiHandlerOptions) {
     const buf = Buffer.from(await response.arrayBuffer())
 
     if (buf.byteLength > 0) {
-      if (isText(null, buf)) {
+      if (isText(buf)) {
         res.send(
           buf.toString("utf-8").replace(new RegExp(baseUrl, "g"), "/api/.ory"),
         )

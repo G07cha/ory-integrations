@@ -1,7 +1,8 @@
 import { Buffer } from "buffer"
 import { SerializeOptions as CookieSerializeOptions, serialize } from "cookie"
 import { IncomingHttpHeaders } from "http"
-import { isText } from "istextorbinary"
+// @ts-ignore
+import { isText } from "istextorbinary/edition-es2022"
 import { NextApiRequest, NextApiResponse } from "next"
 import parse, { splitCookiesString } from "set-cookie-parser"
 import { CreateApiHandlerOptions } from "../type/create-api-handler-options"
